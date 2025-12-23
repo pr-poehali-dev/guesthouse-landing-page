@@ -163,7 +163,7 @@ export default function Index() {
       <section 
         className="relative h-screen flex items-center justify-center bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://cdn.poehali.dev/projects/57ffdf7c-4ede-460b-8321-02f137f7df9f/files/b39c813b-c4ce-476d-bdfd-9bfa1d00c80d.jpg')`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://cdn.poehali.dev/files/Дома.jpg')`,
         }}
       >
         <div className="text-center text-white z-10 px-4 animate-fade-in">
