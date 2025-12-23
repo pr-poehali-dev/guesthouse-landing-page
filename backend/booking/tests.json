@@ -1,0 +1,36 @@
+{
+  "tests": [
+    {
+      "name": "POST booking with valid data",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "name": "Иван Петров",
+        "phone": "+7 999 123-45-67",
+        "dates": "15.06.2024 - 20.06.2024",
+        "guests": "3",
+        "message": "Хотим номер с видом на горы"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST booking with missing required fields",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "name": "Иван"
+      },
+      "expectedStatus": 400,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

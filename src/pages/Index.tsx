@@ -28,6 +28,14 @@ interface Service {
   icon: string;
 }
 
+interface Review {
+  id: number;
+  author: string;
+  rating: number;
+  text: string;
+  date: string;
+}
+
 export default function Index() {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -81,6 +89,30 @@ export default function Index() {
     { name: 'Организация экскурсий', price: 'От 1000 руб', icon: 'MapPin' },
   ];
 
+  const reviews: Review[] = [
+    {
+      id: 1,
+      author: 'Анна М.',
+      rating: 5,
+      text: 'Прекрасное место для семейного отдыха! Чистые номера, уютная атмосфера. Дети были в восторге от детской площадки. Хозяева очень гостеприимные, помогли организовать экскурсии. Обязательно вернемся!',
+      date: 'Ноябрь 2024'
+    },
+    {
+      id: 2,
+      author: 'Дмитрий К.',
+      rating: 5,
+      text: 'Отличный гостевой дом! Тихое спокойное место, красивая природа вокруг. Баня превосходная, мангальная зона удобная. Цены адекватные, сервис на высоте. Рекомендую!',
+      date: 'Октябрь 2024'
+    },
+    {
+      id: 3,
+      author: 'Елена П.',
+      rating: 5,
+      text: 'Останавливались на неделю всей семьей. Все понравилось! Комфортные номера, есть все необходимое. Особенно порадовала кухня - можно готовить самим. Хозяева очень внимательные и отзывчивые.',
+      date: 'Сентябрь 2024'
+    }
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -93,12 +125,37 @@ export default function Index() {
       return;
     }
 
-    toast({
-      title: 'Заявка отправлена!',
-      description: 'Мы свяжемся с вами в ближайшее время',
-    });
+    try {
+      const response = await fetch('https://functions.poehali.dev/0eba2145-234c-4574-b9d7-d0d19ee82cf9', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setFormData({ name: '', phone: '', dates: '', guests: '', message: '' });
+      const data = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: 'Заявка отправлена!',
+          description: 'Мы свяжемся с вами в ближайшее время',
+        });
+        setFormData({ name: '', phone: '', dates: '', guests: '', message: '' });
+      } else {
+        toast({
+          title: 'Ошибка',
+          description: data.error || 'Не удалось отправить заявку',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Ошибка сети',
+        description: 'Проверьте подключение к интернету',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -261,7 +318,46 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="booking" className="py-20 px-4 bg-background">
+      <section id="reviews" className="py-20 px-4 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4 text-foreground">Отзывы наших гостей</h2>
+          <p className="text-center text-muted-foreground mb-12">Что говорят о нас те, кто уже отдыхал у нас</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {reviews.map((review) => (
+              <Card key={review.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center justify-between mb-2">
+                    <CardTitle className="text-lg">{review.author}</CardTitle>
+                    <div className="flex gap-1">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Icon key={i} name="Star" size={16} className="text-yellow-500 fill-yellow-500" />
+                      ))}
+                    </div>
+                  </div>
+                  <CardDescription>{review.date}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{review.text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-muted-foreground mb-4">Средний рейтинг: 5.0 из 5</p>
+            <a 
+              href="https://2gis.ru/ulanude/firm/70000001036997690" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              Смотреть все отзывы на 2ГИС
+              <Icon name="ExternalLink" size={16} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="booking" className="py-20 px-4 bg-muted/30">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4 text-foreground">Забронировать номер</h2>
           <p className="text-center text-muted-foreground mb-12">
