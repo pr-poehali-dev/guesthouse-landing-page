@@ -81,7 +81,6 @@ export default function Index() {
   ];
 
   const services: Service[] = [
-    { name: 'Трансфер из аэропорта', price: '1500 руб', icon: 'Car' },
     { name: 'Баня/сауна', price: '2000 руб/2 часа', icon: 'Flame' },
     { name: 'Мангал и беседка', price: '500 руб/день', icon: 'Flame' },
     { name: 'Детская площадка', price: 'Бесплатно', icon: 'Baby' },
