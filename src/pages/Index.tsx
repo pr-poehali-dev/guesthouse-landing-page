@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import ImageSlider from '@/components/ImageSlider';
 
 interface Room {
   id: number;
@@ -13,7 +14,7 @@ interface Room {
   description: string;
   capacity: string;
   amenities: string[];
-  image: string;
+  images: string[];
 }
 
 interface PriceItem {
@@ -53,7 +54,11 @@ export default function Index() {
       description: '2-этажный дом с панорамными окнами и балконом. Второй этаж: спальня, лаунж-зона с библиотекой и софа. Первый этаж: спальня, кухня, санузел с тропическим душем, зал с раскладным диваном. Застекленная терраса.',
       capacity: 'До 7 человек',
       amenities: ['Wi-Fi', 'Телевизор', 'Кухня полностью оборудована', 'Тропический душ', 'Балкон', 'Панорамные окна', 'Терраса', 'Библиотека', '❌ Без питомцев'],
-      image: 'https://cdn.poehali.dev/files/дом 7 чел.jpg',
+      images: [
+        'https://cdn.poehali.dev/files/дом 7 чел.jpg',
+        'https://cdn.poehali.dev/files/дом 7 чел 2.jpg',
+        'https://cdn.poehali.dev/files/дом 7 чел 3.jpg',
+      ],
     },
     {
       id: 2,
@@ -61,7 +66,11 @@ export default function Index() {
       description: 'Уютный деревянный домик со спальным местом под крышей (160×200) и раскладным диваном. Включает кухню и санузел. Цена за 2-х человек с завтраком, доп. место +1000₽. Без питомцев.',
       capacity: '2-4 человека',
       amenities: ['Wi-Fi', 'Телевизор', 'Кухня', 'Санузел', 'Кондиционер', 'Завтрак включен'],
-      image: 'https://cdn.poehali.dev/files/дом 1.jpg',
+      images: [
+        'https://cdn.poehali.dev/files/дом 1.jpg',
+        'https://cdn.poehali.dev/files/дом 1-2.jpg',
+        'https://cdn.poehali.dev/files/дом 1-3.jpg',
+      ],
     },
     {
       id: 3,
@@ -69,7 +78,11 @@ export default function Index() {
       description: 'Уютный домик со спальным местом под крышей (160×200) и раскладным диваном. Есть кухня и санузел. Цена за 2-х человек с завтраком, доп. место +1000₽. Без питомцев.',
       capacity: '2-4 человека',
       amenities: ['Wi-Fi', 'Телевизор', 'Кухня', 'Санузел', 'Кондиционер', 'Завтрак включен'],
-      image: 'https://cdn.poehali.dev/files/Дом 2.jpg',
+      images: [
+        'https://cdn.poehali.dev/files/Дом 2.jpg',
+        'https://cdn.poehali.dev/files/Дом 2-2.jpg',
+        'https://cdn.poehali.dev/files/Дом 2-3.jpg',
+      ],
     },
     {
       id: 4,
@@ -77,7 +90,11 @@ export default function Index() {
       description: 'Уютный домик с двуспальной кроватью (160×200). Полностью оборудованная кухня и санузел. Цена за 2-х человек с завтраком. Питомцы разрешены по согласованию.',
       capacity: '2 человека',
       amenities: ['Wi-Fi', 'Телевизор', 'Кухня', 'Санузел', 'Кондиционер', 'Завтрак включен', 'Можно с питомцами'],
-      image: 'https://cdn.poehali.dev/files/Домик на двоих.jpg',
+      images: [
+        'https://cdn.poehali.dev/files/Домик на двоих.jpg',
+        'https://cdn.poehali.dev/files/Домик на двоих 2.jpg',
+        'https://cdn.poehali.dev/files/Домик на двоих 3.jpg',
+      ],
     },
   ];
 
@@ -236,11 +253,7 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8">
             {rooms.map((room) => (
               <Card key={room.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <img 
-                  src={room.image} 
-                  alt={room.name} 
-                  className="w-full h-64 object-cover"
-                />
+                <ImageSlider images={room.images} alt={room.name} />
                 <CardHeader>
                   <CardTitle className="text-2xl">{room.name}</CardTitle>
                   <CardDescription className="text-base">{room.description}</CardDescription>
